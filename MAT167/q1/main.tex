@@ -1,0 +1,61 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{ulem}
+\title{MAT167}
+\author{Yuchen Liu}
+\date{August 2023}
+
+\begin{document}
+
+\maketitle
+
+Matrices can be partitioned into several submatrices known as “blocks.” Using a blocked approach,
+matrix-matrix multiplication can be performed with a divide and conquer approach. Supposed we have
+two matrices,
+a) Show that C can be writen as
+\begin{equation*}
+C=
+    \begin{pmatrix}
+    M_{1}+M_{4}+M_{5}-M_{7}& M_{3}+M_{5}\\
+    M_{2}+M_{4}&M_{1}-M_{2}+M_{3}+M_{6}\\
+    \end{pmatrix}
+\end{equation*}
+Given:
+\begin{equation*}
+\begin{aligned}
+M1 &= (A_{11} + A_{22})(B_{11} + B_{22}) \\
+M2 &= (A_{21} + A_{22})B_{11} \\
+M3 &= A_{11}(B_{12} - B_{22}) \\
+M4 &= A_{22}(B_{21} - B_{11}) \\
+M5 &= (A_{11} + A_{12})B_{22} \\
+M6 &= (A_{21} - A_{11})(B_{11} + B_{12}) \\
+M7 &= (A_{12} - A_{22})(B_{21} + B_{22})
+\end{aligned}
+\end{equation*}
+for the first column and first row\\
+$M_{1}+M_{4}+M_{5}-M_{7}=$\\
+$A_{11}B_{22}$ + \sout{$A_{22}B_{11}$} + \sout{$A_{22}B_{22}$} - \sout{$A_{22}B_{21}$} - \sout{$A_{22}B_{11}$} + \sout{$A_{11}B_{22}$} + \sout{$A_{12}B_{22}$} + $A_{12}B_{21}$ +\sout{ $B_{22}A_{12}$} - \sout{$A_{22}B_{21}$} - \sout{$A_{22}B_{22}$}
+\\$=A_{11}B_{11}+A_{12}B_{21}$\\
+for the first column and second row\\
+$M3+M5=$\\
+$A_{11}B_{12}$ - \sout{$A_{11}B_{22} + A_{11}B_{22}$} +$ A_{12}B_{22}$\\
+$=A_{11}B_{12} + A_{12}B_{22}$\\
+for the second column and first row\\
+$M2+M4=$\\
+$A_{21}B_{11}$+\sout{$A_{22}B{11}$}+$A_{22}B_{21}$-\sout{$A_{22}B_{11}$}\\$=A_{21}B_{11}+A_{22}B_{21}$\\
+for the second column and second row\\
+$M1-M2+M3+M6=$\\
+\sout{$A_{11}B_{22}$} + \sout{$A_{22}B_{11}$} + $A_{22}B_{22}$ - \sout{$A_{22}B_{21}$}-\sout{$A_{21}B_{11}$}-\sout{$A_{22}B{11}$}+\sout{$A_{11}B_{12}$} - \sout{$A_{11}B_{22}$}+\sout{$A_{21}B_{11}$}+$A_{21}B_{12}$-\sout{$A_{11}B_{11}$}-\sout{$A_{11}B_{12}$}\\=$A_{21}B_{12}$+$A_{22}B_{22}$\\
+So we can have :\\
+\begin{equation*}
+C=
+    \begin{pmatrix}
+    A_{11}B_{11}+A_{12}B_{21}& A_{11}B_{12} + A_{12}B_{22}\\
+    A_{21}B_{11}+A_{22}B_{21}& A_{21}B_{12}$+$A_{22}B_{22}\\
+    \end{pmatrix}
+\end{equation*}
+
+
+
+\end{document}
