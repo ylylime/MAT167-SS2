@@ -11,18 +11,24 @@ def proj(v1, v2):
 
 def gs(X):
     Y = []
+    res = []
     for i in range(len(X)):
         temp_vec = X[i]
         for inY in Y :
             proj_vec = proj(inY, X[i])
-            #print "i =", i, ", projection vector =", proj_vec
             temp_vec = map(lambda x, y : x - y, temp_vec, proj_vec)
-            #print "i =", i, ", temporary vector =", temp_vec
         Y.append(temp_vec)
     return Y
+    # normalize(Y)
 
-test = numpy.array([[3.0, 1.0], [2.0, 2.0]])
+
+def normalize(Y):
+    for i in Y:
+        normalized_vector = i / numpy.linalg.norm(i)
+    return Y
+
+# test = numpy.array([[3.0, 1.0], [2.0, 2.0]])
 test2 = numpy.array([[1.0, 1.0, 0.0], [1.0, 3.0, 1.0], [2.0, -1.0, 1.0]])
 
-print numpy.array(gs(test))
+# print numpy.array(gs(test))
 print numpy.array(gs(test2))
