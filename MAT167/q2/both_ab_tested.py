@@ -51,6 +51,9 @@ def is_gram_schmidt_result(Q, A, tolerance=1e-5):
 
 
 # CGS ================================================================
+import numpy
+import math
+
 def proj(v1, v2):
     # proj_vec = (numpy.dot(A[i], v_p) / numpy.dot(v_p, v_p)) * v_p
     return (numpy.dot(v2, v1) / numpy.dot(v1, v1)) * v1
@@ -66,8 +69,8 @@ def cgs(A):
     
     for i in range(len(A)):
         # v_i 
-        a_i = A[i]
-        v_i = A[i]
+        a_i = numpy.transpose(numpy.transpose(A)[i])
+        v_i = a_i
         
         # v_pt: previous v's transpose (row vector)
         for v_pt in Q_t:
@@ -93,13 +96,16 @@ def cgs(A):
 
 # test = numpy.array([[3.0, 1.0], [2.0, 2.0]])
 test2 = numpy.array([[1.0, -1.0, 1.0], [1.0, 0.0, 1.0], [1.0, 1.0, 2.0]])
+test3 = np.random.randint(-20, 21, size=(5, 5))
 
+
+print(test3)
 # print numpy.array(gs(test))
-resultQ = cgs(test2)
+resultQ = cgs(test3)
 print(resultQ)
 
 print(is_orthogonal(resultQ))
-print(is_gram_schmidt_result(resultQ, test2))
+print(is_gram_schmidt_result(resultQ, test3))
 
 # MGS ===========================================================================
 import numpy
@@ -115,7 +121,8 @@ def normalize(i):
 def mgs(A):
     # Q_t is the transpose of final matrix / basis Q
     # use transpose of Q so each col vector becoms row vector and easier to access
-    Q_t = numpy.transpose(A)
+    Q_t = numpy.transpose(A).astype(float) # force it to be float
+    print(Q_t)
     
     for i in range(len(Q_t)):
         Q_t[i] = normalize(Q_t[i])
@@ -129,15 +136,17 @@ def mgs(A):
             q_k = q_k - numpy.dot(q_i, q_k) * q_i
             
             Q_t[k] = numpy.transpose(q_k)
-            
+    
     Q = numpy.transpose(Q_t)   
     return Q
 
 # test = numpy.array([[3.0, 1.0], [2.0, 2.0]])
 test2 = numpy.array([[1.0, -1.0, 1.0], [1.0, 0.0, 1.0], [1.0, 1.0, 2.0]])
+test3 = np.random.randint(-20, 21, size=(5, 5))
+print(test3)
 
-resultQ = mgs(test2)
+resultQ = mgs(test3)
 print(resultQ)
 
 print(is_orthogonal(resultQ))
-print(is_gram_schmidt_result(resultQ, test2))
+print(is_gram_schmidt_result(resultQ, test3))
