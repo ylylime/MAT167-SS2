@@ -1,5 +1,7 @@
 import numpy as np
-import numpy
+import random
+import scipy
+from scipy.linalg import hilbert
 
 # checking functions I ask GPT to make for me ================================
 def is_orthogonal(matrix):
@@ -52,7 +54,6 @@ def is_gram_schmidt_result(Q, A, tolerance=1e-5):
 
 # CGS ================================================================
 def proj(v1, v2):
-    # proj_vec = (numpy.dot(A[i], v_p) / numpy.dot(v_p, v_p)) * v_p
     return (numpy.dot(v2, v1) / numpy.dot(v1, v1)) * v1
 
 def normalize(i):
@@ -89,23 +90,10 @@ def cgs(A):
     return Q
 
 
-
-
-# test = numpy.array([[3.0, 1.0], [2.0, 2.0]])
-test2 = numpy.array([[1.0, -1.0, 1.0], [1.0, 0.0, 1.0], [1.0, 1.0, 2.0]])
-
-# print numpy.array(gs(test))
-resultQ = cgs(test2)
-print(resultQ)
-
-print(is_orthogonal(resultQ))
-print(is_gram_schmidt_result(resultQ, test2))
-
 # MGS ===========================================================================
 import numpy
 
 def proj(v1, v2):
-    # proj_vec = (numpy.dot(A[i], v_p) / numpy.dot(v_p, v_p)) * v_p
     return (numpy.dot(v2, v1) / numpy.dot(v1, v1)) * v1
 
 def normalize(i):
@@ -133,11 +121,50 @@ def mgs(A):
     Q = numpy.transpose(Q_t)   
     return Q
 
-# test = numpy.array([[3.0, 1.0], [2.0, 2.0]])
-test2 = numpy.array([[1.0, -1.0, 1.0], [1.0, 0.0, 1.0], [1.0, 1.0, 2.0]])
 
-resultQ = mgs(test2)
-print(resultQ)
+def main():
 
-print(is_orthogonal(resultQ))
-print(is_gram_schmidt_result(resultQ, test2))
+    # test = numpy.array([[3.0, 1.0], [2.0, 2.0]])
+    test2 = numpy.array([[1.0, -1.0, 1.0], [1.0, 0.0, 1.0], [1.0, 1.0, 2.0]])
+    # print numpy.array(gs(test))
+    resultcgs = cgs(test2)
+    resultmgs = mgs(test2)
+
+    print(resultcgs)
+    # print(is_orthogonal(resultcgs))
+    # print(is_gram_schmidt_result(resultcgs, test2))
+
+    print(resultmgs)
+    # print(is_orthogonal(resultmgs))
+    # print(is_gram_schmidt_result(resultmgs, test2))
+
+
+    n = random.randint(2,9)
+    print(n)
+    # random matrix of size n
+    A = numpy.random.random((n, n)) 
+    resultcgs = cgs(A) 
+    resultmgs = mgs(A)
+    
+    # ||QtQ=I|| for cgs
+    test2c1 = numpy.linalg.norm( numpy.dot(numpy.transpose(resultcgs), resultcgs) - numpy.identity(n))
+    print(test2c1)
+    # ||QtQ=I|| for mgs
+    test2c1 = numpy.linalg.norm( numpy.dot(numpy.transpose(resultmgs), resultmgs) - numpy.identity(n))
+    print(test2c1)
+    
+    
+    # random matrix of size n following the given eq
+    A = 0.00001 * numpy.eye(n) + scipy.linalg.hilbert(n)
+    resultcgs = cgs(A)
+    resultmgs = mgs(A)
+
+    # ||QtQ=I|| for cgs
+    test2c2 = numpy.linalg.norm( numpy.dot(numpy.transpose(resultcgs), resultcgs) - numpy.identity(n))
+    print(test2c2)
+    # ||QtQ=I|| for mgs
+    test2c2 = numpy.linalg.norm( numpy.dot(numpy.transpose(resultmgs), resultmgs) - numpy.identity(n))
+    print(test2c2)
+
+
+main()
