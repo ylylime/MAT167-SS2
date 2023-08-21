@@ -131,32 +131,40 @@ def main():
     resultmgs = mgs(test2)
 
     print(resultcgs)
-    print(is_orthogonal(resultcgs))
-    print(is_gram_schmidt_result(resultcgs, test2))
+    # print(is_orthogonal(resultcgs))
+    # print(is_gram_schmidt_result(resultcgs, test2))
 
     print(resultmgs)
-    print(is_orthogonal(resultmgs))
-    print(is_gram_schmidt_result(resultmgs, test2))
+    # print(is_orthogonal(resultmgs))
+    # print(is_gram_schmidt_result(resultmgs, test2))
 
 
-    n = random.randint(1,9)
+    n = random.randint(2,9)
     print(n)
+    # random matrix of size n
     A = numpy.random.random((n, n)) 
-
-    resultcg = cgs(A) 
-    resultmg = mgs(A)
-    test2c1 = numpy.linalg.norm( numpy.dot(numpy.transpose(A), A) - numpy.identity(n))
+    resultcgs = cgs(A) 
+    resultmgs = mgs(A)
+    
+    # ||QtQ=I|| for cgs
+    test2c1 = numpy.linalg.norm( numpy.dot(numpy.transpose(resultcgs), resultcgs) - numpy.identity(n))
+    print(test2c1)
+    # ||QtQ=I|| for mgs
+    test2c1 = numpy.linalg.norm( numpy.dot(numpy.transpose(resultmgs), resultmgs) - numpy.identity(n))
     print(test2c1)
     
-
-    # ||QtQ=I||
+    
+    # random matrix of size n following the given eq
     A = 0.00001 * numpy.eye(n) + scipy.linalg.hilbert(n)
-
     resultcgs = cgs(A)
     resultmgs = mgs(A)
-    test2c2 = numpy.linalg.norm( numpy.dot(numpy.transpose(A), A) - numpy.identity(n))
-    print(test2c2)
 
+    # ||QtQ=I|| for cgs
+    test2c2 = numpy.linalg.norm( numpy.dot(numpy.transpose(resultcgs), resultcgs) - numpy.identity(n))
+    print(test2c2)
+    # ||QtQ=I|| for mgs
+    test2c2 = numpy.linalg.norm( numpy.dot(numpy.transpose(resultmgs), resultmgs) - numpy.identity(n))
+    print(test2c2)
 
 
 main()
