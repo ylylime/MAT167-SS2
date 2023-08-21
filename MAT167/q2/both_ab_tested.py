@@ -81,7 +81,7 @@ def cgs(A):
         # append current v_i
         Q_t.append(numpy.transpose(v_i))
             
-    print(Q_t)
+    # print(Q_t)
     
     for i in range(len(Q_t)):
         Q_t[i] = normalize(Q_t[i])
@@ -165,6 +165,5 @@ def main():
     # ||QtQ=I|| for mgs
     test2c2 = numpy.linalg.norm( numpy.dot(numpy.transpose(resultmgs), resultmgs) - numpy.identity(n))
     print(test2c2)
-
 
 main()
