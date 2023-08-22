@@ -1,5 +1,11 @@
 import numpy as np
+<<<<<<< HEAD:MAT167/Project_1/q2/both_ab_tested.py
 import numpy
+=======
+import random
+import scipy
+from scipy.linalg import hilbert
+>>>>>>> 73888be06e2b93f7a85051080d1c559ac826d07e:MAT167/q2/both_ab_tested.py
 
 # checking functions I ask GPT to make for me ================================
 def is_orthogonal(matrix):
@@ -51,11 +57,15 @@ def is_gram_schmidt_result(Q, A, tolerance=1e-5):
 
 
 # CGS ================================================================
+<<<<<<< HEAD:MAT167/Project_1/q2/both_ab_tested.py
 import numpy
 import math
 
 def proj(v1, v2):
     # proj_vec = (numpy.dot(A[i], v_p) / numpy.dot(v_p, v_p)) * v_p
+=======
+def proj(v1, v2):
+>>>>>>> 73888be06e2b93f7a85051080d1c559ac826d07e:MAT167/q2/both_ab_tested.py
     return (numpy.dot(v2, v1) / numpy.dot(v1, v1)) * v1
 
 def normalize(i):
@@ -69,8 +79,13 @@ def cgs(A):
     
     for i in range(len(A)):
         # v_i 
+<<<<<<< HEAD:MAT167/Project_1/q2/both_ab_tested.py
         a_i = numpy.transpose(numpy.transpose(A)[i])
         v_i = a_i
+=======
+        a_i = A[i]
+        v_i = A[i]
+>>>>>>> 73888be06e2b93f7a85051080d1c559ac826d07e:MAT167/q2/both_ab_tested.py
         
         # v_pt: previous v's transpose (row vector)
         for v_pt in Q_t:
@@ -83,7 +98,11 @@ def cgs(A):
         # append current v_i
         Q_t.append(numpy.transpose(v_i))
             
+<<<<<<< HEAD:MAT167/Project_1/q2/both_ab_tested.py
     print(Q_t)
+=======
+    # print(Q_t)
+>>>>>>> 73888be06e2b93f7a85051080d1c559ac826d07e:MAT167/q2/both_ab_tested.py
     
     for i in range(len(Q_t)):
         Q_t[i] = normalize(Q_t[i])
@@ -92,6 +111,7 @@ def cgs(A):
     return Q
 
 
+<<<<<<< HEAD:MAT167/Project_1/q2/both_ab_tested.py
 
 
 # test = numpy.array([[3.0, 1.0], [2.0, 2.0]])
@@ -107,11 +127,16 @@ print(resultQ)
 print(is_orthogonal(resultQ))
 print(is_gram_schmidt_result(resultQ, test3))
 
+=======
+>>>>>>> 73888be06e2b93f7a85051080d1c559ac826d07e:MAT167/q2/both_ab_tested.py
 # MGS ===========================================================================
 import numpy
 
 def proj(v1, v2):
+<<<<<<< HEAD:MAT167/Project_1/q2/both_ab_tested.py
     # proj_vec = (numpy.dot(A[i], v_p) / numpy.dot(v_p, v_p)) * v_p
+=======
+>>>>>>> 73888be06e2b93f7a85051080d1c559ac826d07e:MAT167/q2/both_ab_tested.py
     return (numpy.dot(v2, v1) / numpy.dot(v1, v1)) * v1
 
 def normalize(i):
@@ -121,8 +146,12 @@ def normalize(i):
 def mgs(A):
     # Q_t is the transpose of final matrix / basis Q
     # use transpose of Q so each col vector becoms row vector and easier to access
+<<<<<<< HEAD:MAT167/Project_1/q2/both_ab_tested.py
     Q_t = numpy.transpose(A).astype(float) # force it to be float
     print(Q_t)
+=======
+    Q_t = numpy.transpose(A)
+>>>>>>> 73888be06e2b93f7a85051080d1c559ac826d07e:MAT167/q2/both_ab_tested.py
     
     for i in range(len(Q_t)):
         Q_t[i] = normalize(Q_t[i])
@@ -136,6 +165,7 @@ def mgs(A):
             q_k = q_k - numpy.dot(q_i, q_k) * q_i
             
             Q_t[k] = numpy.transpose(q_k)
+<<<<<<< HEAD:MAT167/Project_1/q2/both_ab_tested.py
     
     Q = numpy.transpose(Q_t)   
     return Q
@@ -150,3 +180,55 @@ print(resultQ)
 
 print(is_orthogonal(resultQ))
 print(is_gram_schmidt_result(resultQ, test3))
+=======
+            
+    Q = numpy.transpose(Q_t)   
+    return Q
+
+
+def main():
+
+    # test = numpy.array([[3.0, 1.0], [2.0, 2.0]])
+    test2 = numpy.array([[1.0, -1.0, 1.0], [1.0, 0.0, 1.0], [1.0, 1.0, 2.0]])
+    # print numpy.array(gs(test))
+    resultcgs = cgs(test2)
+    resultmgs = mgs(test2)
+
+    print(resultcgs)
+    # print(is_orthogonal(resultcgs))
+    # print(is_gram_schmidt_result(resultcgs, test2))
+
+    print(resultmgs)
+    # print(is_orthogonal(resultmgs))
+    # print(is_gram_schmidt_result(resultmgs, test2))
+
+
+    n = random.randint(2,9)
+    print(n)
+    # random matrix of size n
+    A = numpy.random.random((n, n)) 
+    resultcgs = cgs(A) 
+    resultmgs = mgs(A)
+    
+    # ||QtQ=I|| for cgs
+    test2c1 = numpy.linalg.norm( numpy.dot(numpy.transpose(resultcgs), resultcgs) - numpy.identity(n))
+    print(test2c1)
+    # ||QtQ=I|| for mgs
+    test2c1 = numpy.linalg.norm( numpy.dot(numpy.transpose(resultmgs), resultmgs) - numpy.identity(n))
+    print(test2c1)
+    
+    
+    # random matrix of size n following the given eq
+    A = 0.00001 * numpy.eye(n) + scipy.linalg.hilbert(n)
+    resultcgs = cgs(A)
+    resultmgs = mgs(A)
+
+    # ||QtQ=I|| for cgs
+    test2c2 = numpy.linalg.norm( numpy.dot(numpy.transpose(resultcgs), resultcgs) - numpy.identity(n))
+    print(test2c2)
+    # ||QtQ=I|| for mgs
+    test2c2 = numpy.linalg.norm( numpy.dot(numpy.transpose(resultmgs), resultmgs) - numpy.identity(n))
+    print(test2c2)
+
+main()
+>>>>>>> 73888be06e2b93f7a85051080d1c559ac826d07e:MAT167/q2/both_ab_tested.py
